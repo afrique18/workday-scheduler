@@ -1,7 +1,56 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-$(function () {
+$(document).ready(function () {
+  $("currentDay").text(moment().format("MMM DD YYYY, h:mm:ss a"))
+
+ $(".saveBtn").on("click", function() {
+    console.log(this);
+    var text = $(this).siblings(".description").val();
+    var time = $(this).parent().attr("id");
+    
+    localStorage.setItem(time, text);
+  
+ })
+
+ $("#hour9.description").val(localStorage.getItem("hour9"));
+ $("#hour10.description").val(localStorage.getItem("hour9"));
+ $("#hour11.description").val(localStorage.getItem("hour9"));
+ $("#hour12.description").val(localStorage.getItem("hour9"));
+ $("#hour13.description").val(localStorage.getItem("hour9"));
+ $("#hour14.description").val(localStorage.getItem("hour9"));
+ $("#hour15.description").val(localStorage.getItem("hour9"));
+ $("#hour16.description").val(localStorage.getItem("hour9"));
+ $("#hour17.description").val(localStorage.getItem("hour9"));
+
+ function hourTracker() {
+    var currentHour = moment().hourTracker
+
+    $(".time-block").each(function (){
+        var blockHour = parseInt($(this).attr(id).split("hour")[1]);
+        console.log(blockHour < currentHour) 
+
+        if (blockHour < currentHour) {
+          $(this).addClass("past");
+          $(this).removeClass("future");
+          $(this).removeClass("present");
+        }
+
+        else if (blockHour === currentHour) {
+          $(this).removeClass("past");
+          $(this).addClass("present");
+          $(this).removeClass("future");
+        }
+        else {
+          $(this).removeClass("present");
+          $(this).addClass("past");
+          $(this).removeClass("future");
+        } 
+    })
+ }
+hourTracker ();
+
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
